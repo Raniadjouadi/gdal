@@ -1,0 +1,35 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Responsibles list
+{% endblock %}
+
+{% block content %}
+<h1>Reponsibles list</h1>
+
+<ul>
+    {% if Entite == 'OSS' %}
+        {% for resp in object_list %}
+        <li>
+            <a href="{% url 'tache:responsible-detail' resp.id %}">{% if resp.civility %}{{ resp.civility }}{% endif %} {{ resp.first_name }} {{ resp.last_name }} | {{ resp.job_title }} | {{ resp.organization.acronym }}</a>
+            - <small><small><a href="{% url 'tache:responsible-update' resp.pk %}">(Update)</a></small></small> - 
+            <small><small><a href="{% url 'tache:responsible-delete' resp.pk %}">(Delete)</a></small></small>
+        </li>
+        {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:responsible-add' %}">(Add responsible)</a></small></small>
+    {% else %}
+        {% for resp in responsables %}
+            <li>
+                <a href="{% url 'tache:responsible-detail' resp.id %}">{% if resp.civility %}{{ resp.civility }}{% endif %} {{ resp.first_name }} {{ resp.last_name }} | {{ resp.job_title }} </a>
+                - <small><small><a href="{% url 'tache:responsible-update' resp.pk %}">(Update)</a></small></small> - 
+                <small><small><a href="{% url 'tache:responsible-delete' resp.pk %}">(Delete)</a></small></small>
+            </li>
+        {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:responsible-add' %}">(Add responsible)</a></small></small>
+
+    {% endif %}
+{% endblock %}

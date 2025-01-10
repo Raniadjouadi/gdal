@@ -1,0 +1,22 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Create a new blog category!
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>Add category ....</h1>
+    </br></br>
+
+    <div class="mb-3">
+        <form method= "POST">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button class="btn btn-secondary" >Add category</button>
+        </form>
+    </div>
+{% else %}
+you are not allowed here! 
+{% endif %}
+{% endblock %}

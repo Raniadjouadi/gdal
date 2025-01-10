@@ -1,0 +1,20 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Component add
+{% endblock %}
+
+{% block content %}
+<h1>Add Component...</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Add</button>
+</form>
+
+<script>
+    var project_id = {{ project.id }};
+    document.getElementById("input_project").value = project_id;
+</script>
+
+{% endblock %}

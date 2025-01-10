@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+{% block title %}
+Progression add
+{% endblock %}
+{% block content %}
+<div>
+    <h1>Add Progression...</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <button class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+<script>
+    var taskid = {{ t_id.id }};
+    document.getElementById("input_tache").value = taskid;
+</script>
+{% endblock %}

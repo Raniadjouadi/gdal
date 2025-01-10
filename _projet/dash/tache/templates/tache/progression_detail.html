@@ -1,0 +1,32 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Progression detail
+{% endblock %}
+
+{% block content %}
+<p><small><small>
+<a href = "{% url 'tache:axes-list' %}">Axes</a>
+| <a href = "{% url 'tache:axe-detail' parent.0.axe_id %}">{{parent.0.axe}}</a>
+| <a href = "{% url 'tache:project-detail' parent.0.project_id %}">{{parent.0.project}}</a>
+| <a href = "{% url 'tache:component-detail' parent.0.component_id %}">{{parent.0.component|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:result-detail' parent.0.result_id %}">{{parent.0.result|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:product-detail' parent.0.product_id %}">{{parent.0.product|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:activity-detail' parent.0.activity_id %}">{{parent.0.activity|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:task-detail' parent.0.task_id %}">{{parent.0.task|truncatewords:3}}...</a>
+</small></small></p>
+<h1>Progression</h1>
+{% comment %} <small><small><a href="{% url 'tache:progression-update' object.pk %}">(Update)</a></small></small> -  {% endcomment %}
+{% comment %} <small><small><a href="{% url 'tache:progression-delete' object.pk %}">(Delete)</a></small></small> {% endcomment %}
+<br>
+<ul>
+    <li>date_record: {{ object.date_record}}</li>
+    <li>progess_rate: {{ object.progess_rate}}</li>
+    <li>phase: {{ object.phase}}</li>
+    <li>task: {{ object.task}}</li>
+    <li>document: {{ object.document}}</li>
+    <li>contract: {{ object.contract}}</li>
+</ul>
+
+
+{% endblock %}

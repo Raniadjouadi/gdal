@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Results list
+{% endblock %}
+
+{% block content %}
+<h1>Results list</h1>
+<small><small><a href="{% url 'tache:result-add' %}">(Add Result)</a></small></small>
+<ul>
+    {% for result in object_list %}
+    <li>
+        <a href="{% url 'tache:result-detail' result.id %}">{{ result }}</a>
+        - <small><small><a href="{% url 'tache:result-update' result.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:result-delete' result.pk %}">(Delete)</a></small></small>
+</li>
+    {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:result-add' %}">(Add Result)</a></small></small>
+{% endblock %}

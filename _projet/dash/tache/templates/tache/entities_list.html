@@ -1,0 +1,29 @@
+{% extends 'tache/base.html' %}
+{% block content %}
+<h1>Entities list</h1>
+<ul>
+    {% if Entite == 'OSS' %}
+        {% for entity in object_list %}
+        <li>
+            <a href="{% url 'tache:entity-detail' entity.id %}">{{ entity }}</a>
+            - <small><small><a href="{% url 'tache:entity-update' entity.pk %}">(Update)</a></small></small> - 
+            <small><small><a href="{% url 'tache:entity-delete' entity.pk %}">(Delete)</a></small></small>
+
+    </li>
+        {% endfor %}
+</ul>
+<small><small><a href="{% url 'tache:entity-add' %}">(Add Entity)</a></small></small>
+{% else %}
+        {% for entity in entites %}
+        <li>
+            <a href="{% url 'tache:entity-detail' entity.id %}">{{ entity }}</a>
+            - <small><small><a href="{% url 'tache:entity-update' entity.pk %}">(Update)</a></small></small> - 
+            <small><small><a href="{% url 'tache:entity-delete' entity.pk %}">(Delete)</a></small></small>
+
+        </li>
+        {% endfor %}
+</ul>
+<small><small><a href="{% url 'tache:entity-add' %}">(Add Entity)</a></small></small>
+
+{% endif %}
+{% endblock %}

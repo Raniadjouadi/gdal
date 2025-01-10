@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/ol.css'%}" type="text/css">
+    <style>
+      .map {
+        height: 600px;
+        width: 800px;
+      }
+    </style>
+    <script src="{% static 'js/ol.js'%}"></script>
+    <title>OpenLayers example</title>
+  </head>
+
+  <body>
+    <h2>My Map</h2>
+    <div>
+    <div id="map" class="map"></div>
+
+
+    <script type="text/javascript">
+      var layerosm = new ol.layer.Tile({source: new ol.source.OSM()})
+
+
+//      var source = new ol.source.Vector({url: 'data:,' + encodeURIComponent('{{ppgeojson | safe}}'),format: new ol.format.GeoJSON()})
+      var source = new ol.source.Vector()
+      
+      var layervecteur = new ol.layer.Vector({source:source})
+      
+      var map = new ol.Map({
+        target: 'map',
+        layers: [layerosm,layervecteur],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([10.1, 9]),
+          zoom: 3.6
+        })
+      });
+        const geojson = JSON.parse('{{ppgeojson | safe}}')
+        source.addFeatures(
+        new ol.format.GeoJSON().readFeatures(geojson, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: map.getView().getProjection()
+        })
+        );
+    </script>
+
+
+<div>{{ppgeojson | safe}}</div>
+</div>
+  </body>
+</html>

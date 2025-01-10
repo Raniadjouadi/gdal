@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Progressions list
+{% endblock %}
+
+{% block content %}
+<h1>Progressions list</h1>
+<small><small><a href="{% url 'tache:progression-add' %}">(Add Progression)</a></small></small>
+<ul>
+    {% for progression in object_list %}
+    <li>
+        <a href="{% url 'tache:progression-detail' progression.id %}">{{ progression }}</a>
+        - <small><small><a href="{% url 'tache:progression-update' progression.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:progression-delete' progression.pk %}">(Delete)</a></small></small>
+</li>
+    {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:progression-add' %}">(Add Progression)</a></small></small>
+{% endblock %}

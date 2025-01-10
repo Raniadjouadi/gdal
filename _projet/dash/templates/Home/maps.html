@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+{%extends 'layouts/base.html'%}
+{% block title %} Component detail{% endblock %} 
+{%load static %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+    <div class="d-block mb-4 mb-md-0">
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                <li class="breadcrumb-item">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Axe</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Climat</li>
+            </ol>
+        </nav>
+        <h2 class="h4">ADSWAC</h2>
+        <p class="mb-0"> Strengthening awareness, knowledge and capacity to adapt to climate change and variability at community, district, national and regional level</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        <div class="btn-group ms-2 ms-lg-3">
+            <a href="#">  <button type="button" class="btn btn-sm btn-outline-gray-600">Update</button></a>
+            <button type="button" class="btn btn-sm btn-outline-gray-600">Delete</button>
+        </div>
+    </div>
+</div>
+  <div>
+    <br>
+    <br>
+    <br>
+  </div>
+<!--End of Page Heading -->
+
+<!-- composante-->
+      <div >
+        <div class="card table-card">
+            <div class="card-header">
+                <ul class="nav nav-pills nav-fill mt-3 border-bottom pb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="feather icon-film m-r-5"></i> Component chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="feather icon-file-text m-r-5"></i> Execution du budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="feather icon-mail m-r-5"></i> Liste de résultats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-news-tab" data-toggle="pill" href="#pills-news" role="tab" aria-controls="pills-news" aria-selected="false"><i class="feather icon-monitor m-r-5"> Consommation</i> 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body p-0">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="table-responsive">
+                            <div class="customer-scroll" style="height:420px;position:relative;">
+                                <table class="table table-hover m-b-0">
+                                    <tr>
+                                        <div class="card-body">
+                                            <div class="chart-pie pt-4 pb-2">
+                                                <canvas id="myPieChart"></canvas>
+                                            </div>
+                                            <div class="mt-4 text-center small">
+                                                <span class="mr-2">
+                                                    <i class="fas fa-circle text-primary"></i> Budget réservé
+                                                </span>
+                                                <span class="mr-2">
+                                                    <i class="fas fa-circle text-success"></i> Budget engagé
+                                                </span>
+                                                <span class="mr-2">
+                                                    <i class="fas fa-circle text-info"></i> Budget consomé
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="table-responsive">
+                            <div class="customer-scroll1" style="height:420px;position:relative;">
+                                <table class="table table-hover m-b-0">
+                                    <thead>
+                                        <tr>
+                                            <th><span>Entité </span></th>
+                                            <th><span>Budget total <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                            <th><span>Budget reservé <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                            <th><span>Budget engagé <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                            <th><span>Budget consommé <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                            <th><span>Budget restant <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                            <th><span>Progression <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ADPP ADSWAC REE</td>
+                                            <td>1275735,0	
+                                            </td>
+                                            <td>25000,0
+                                            </td>
+                                            <td>94200,0
+                                            </td>
+                                            <td>56500,0
+                                            </td>
+                                            <td>1100035,0
+                                            </td>
+                                            <td>33.8%
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ADPP ADSWAC REE</td>
+                                            <td>1275735,0	
+                                            </td>
+                                            <td>25000,0
+                                            </td>
+                                            <td>94200,0
+                                            </td>
+                                            <td>56500,0
+                                            </td>
+                                            <td>1100035,0
+                                            </td>
+                                            <td>33.8%
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ADPP ADSWAC REE</td>
+                                            <td>1275735,0	
+                                            </td>
+                                            <td>25000,0
+                                            </td>
+                                            <td>94200,0
+                                            </td>
+                                            <td>56500,0
+                                            </td>
+                                            <td>1100035,0
+                                            </td>
+                                            <td>33.8%
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ADPP ADSWAC REE</td>
+                                            <td>1275735,0	
+                                            </td>
+                                            <td>25000,0
+                                            </td>
+                                            <td>94200,0
+                                            </td>
+                                            <td>56500,0
+                                            </td>
+                                            <td>1100035,0
+                                            </td>
+                                            <td>33.8%
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        <div class="table-responsive">
+                            <div class="customer-scroll2" style="height:420px;position:relative;">
+                                <table class="table table-hover m-b-0">
+                                    <thead>
+                                        <tr>
+                                            <th><span>Outcomes</span></th>
+                                            <th><span>Budget </span></th>
+                                            <th><span>&nbsp; </span></th>
+                                            <th><span>&nbsp; </span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Outcome 1.1: Enhanced Awareness and ownership of adaptation and climate risk reduction processes of the targeted populations
+                                                </td>
+                                            <td>1523365,0</td>
+                                            <td><a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                Edit
+                                              </a>
+                                            </td>
+                                            <td><a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                delete
+                                              </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Outcome 1.2: Enhanced capacity at sub-national, national and regional level to adapt to climate change risks and variability in the agriculture and water sectors
+                                                </td>
+                                            <td>1523365,0</td>
+                                            <td><a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                Edit
+                                              </a>
+                                            </td>
+                                            <td><a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                delete
+                                              </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
+                        <div class="table-responsive">
+                            <div class="customer-scroll3" style="height:420px;position:relative;">
+                                <table class="table table-hover m-b-0">
+                                    <thead>
+                                        <tr>
+                                            <th><span>Progression de la durée consommée dédiée à la composante :</span></th>
+                                            <th><span>Progression globale des travaux de la composante : <a class="help" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><i class="feather icon-help-circle f-16"></i></a></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>786
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                            <td>485
+                                                <div class="progress mt-1" style="height:4px;">
+                                                    <div class="progress-bar bg-primary rounded" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+                           
+        </div>
+        
+        </div>
+    </div>
+                      
+    </div>
+   
+
+{% endblock %}

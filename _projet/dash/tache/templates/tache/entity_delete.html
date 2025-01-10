@@ -1,0 +1,25 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Delete Entity
+{% endblock %}
+
+{% block content %}
+{% comment %}{% if user.is_authenticated %} {% endcomment %}
+
+<h1>You're about to delete  "{{ entities }}". <br> Are you sure?</h1>
+<div class="mb-3">
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary">Delete</button>
+    </form>
+
+</div>
+
+
+{% comment %} {% else %}
+<h1>Vous n'êtes pas autorisé à appoeter des modifications sur les données!</h1>
+{% endif %}{% endcomment %}
+
+{% endblock %} 

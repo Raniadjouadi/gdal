@@ -1,0 +1,77 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Axes list
+{% endblock %}
+
+{% block content %}
+ <!-- Page Heading -->
+ <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+  <div class="d-block mb-4 mb-md-0">
+      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+          <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+              <li class="breadcrumb-item">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+              </li>
+              <li class="breadcrumb-item"><a href="#">Dash</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Axe list</li>
+          </ol>
+      </nav>
+      <h2 class="h4">Axes list</h2>
+      <p class="mb-0">Description of axes list description of axes list.</p>
+  </div>
+  <div class="btn-toolbar mb-2 mb-md-0">
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+          class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+   
+  </div>
+</div>
+<div>
+  <br>
+  <br>
+  <br>
+</div>
+<!--End of Page Heading -->
+
+
+<div id="content">
+  <div class="row">
+      <!-- Card -->
+      <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">      
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        {% if entitie_id != 5 %}
+                        {% for axe in axes %}
+                              <a class="h5 mb-0 font-weight-bold text-gray-800" href="{% url 'tache:axe-detail' axe.id %}">{{ axe.name }}  </a>
+                              {% endfor %}
+                              {% else %}
+                          <br>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs mr-2" data-toggle="tooltip" data-original-title="Edit user">
+                              Edit
+                            </a>
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              delete
+                            </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+<small><small><a href="{% url 'tache:axe-add' %}">(Add Axe)</a></small></small>
+<ul>
+    
+      {% for axe in object_list %}
+    <li>
+        <a href="{% url 'tache:axe-detail' axe.id %}">{{ axe }} <small>({{ axe.projects_set.all|length  }} projects)</small>  </a>
+        - <small><small><a href="{% url 'tache:axe-update' axe.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:axe-delete' axe.pk %}">(Delete)</a></small></small>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Products list
+{% endblock %}
+
+{% block content %}
+<h1>Products list</h1>
+<small><small><a href="{% url 'tache:product-add' %}">(Add Product)</a></small></small>
+<ul>
+    {% for product in object_list %}
+    <li>
+        <a href="{% url 'tache:product-detail' product.id %}">{{ product }}</a>
+        - <small><small><a href="{% url 'tache:product-update' product.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:product-delete' product.pk %}">(Delete)</a></small></small>
+</li>
+    {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:product-add' %}">(Add Product)</a></small></small>
+{% endblock %}

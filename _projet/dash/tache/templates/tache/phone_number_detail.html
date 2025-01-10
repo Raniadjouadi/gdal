@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Activity detail
+{% endblock %}
+
+{% block content %}
+
+<h1>Activity</h1>
+<small><small><a href="{% url 'tache:activity-update' activity.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:activity-delete' activity.pk %}">(Delete)</a></small></small>
+<br>
+<ul>
+    <li>Activity: {{ object.activity}}</li>
+    <li>description: {{ object.description}}</li>
+    <li>budget: {{ object.budget}}</li>
+    <li>product: {{ object.product}}</li>
+</ul>
+
+
+{% endblock %}

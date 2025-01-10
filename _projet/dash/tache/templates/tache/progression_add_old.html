@@ -1,0 +1,15 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Progression add
+{% endblock %}
+
+{% block content %}
+<h1>Add Progression...</h1>
+<table>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+</table>
+<button>Post</button>
+{% endblock %}

@@ -1,0 +1,14 @@
+python -m pip install Django
+pip install celery
+pip install django-bootstrap4
+pip install django-phonenumbers
+pip install django-phonenumber-field
+pip install django-bootstrap-datepicker-plus
+pip install django-ckeditor
+pip install django-chartjs
+pip install django-celery-results
+pip install django-celery-beat
+pip install django-workflow-engine
+pip install psycopg2
+pip install Pillow
+pip install django-redis

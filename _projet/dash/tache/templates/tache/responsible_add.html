@@ -1,0 +1,16 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Responsible add
+{% endblock %}
+
+{% block content %}
+<h1>Add responsible...</h1>
+<table>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <button>Post</button>
+</table>
+
+{% endblock %}

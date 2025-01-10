@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Activities list
+{% endblock %}
+
+{% block content %}
+<h1>Activities list</h1>
+{% comment %} <small><small><a href="{% url 'tache:activity-add' %}">(Add Activity)</a></small></small> {% endcomment %}
+<ul>
+    {% for activity in object_list %}
+    <li>
+        <a href="{% url 'tache:activity-detail' activity.id %}">{{ activity }}</a>
+        - <small><small><a href="{% url 'tache:activity-update' activity.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:activity-delete' activity.pk %}">(Delete)</a></small></small>
+</li>
+    {% endfor %}
+</ul>
+
+{% comment %} <small><small><a href="{% url 'tache:activity-add' %}">(Add Activity)</a></small></small> {% endcomment %}
+{% endblock %}

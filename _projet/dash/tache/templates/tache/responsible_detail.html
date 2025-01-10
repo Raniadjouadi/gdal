@@ -1,0 +1,30 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Responsible detail
+{% endblock %}
+
+{% block content %}
+
+<h1>reponsible</h1>
+<small><small><a href="{% url 'tache:responsible-update' object.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:responsible-delete' object.pk %}">(Delete)</a></small></small>
+
+<br>
+<ul>
+    <li>{{ object.civility}} {{ responsibles.first_name}} {{ object.last_name}}</li>
+    <li>organization: {{ object.organization}}</li>
+    <li>job_title: {{ object.job_title}}</li>
+    <li>email_address: {{ object.email_address }}</li>
+    <li>Phone number: </li>
+    <ul>
+        {% for num in object.phone_number.all %}
+        <li>{{ num.phone_type }}: {{ num }}</li>
+        {% endfor %}
+    </ul>
+</ul>
+
+
+
+
+{% endblock %}

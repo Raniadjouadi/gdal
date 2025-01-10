@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{%extends 'layouts/base.html'%}
+{% block title %} update Profile page {% endblock %} 
+{%load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Edit Profile</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-5 pr-md-1">
+                <div class="form-group">
+                  <label>UserID (disabled)</label>
+                  <input type="text" class="form-control" disabled="" value="{{ request.user.id }}">
+                </div>
+              </div>
+              <div class="col-md-3 px-md-1">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" value="{{ request.user.username }}">
+                </div>
+              </div>
+              <div class="col-md-4 pl-md-1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" value="{{ request.user.email }}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-md-1">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" placeholder="First Name" value="">
+                </div>
+              </div>
+              <div class="col-md-6 pl-md-1">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" placeholder="Last Name" value="">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>About Me</label>
+                  <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">{{ user.profile.bio }}</textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 pr-md-1">
+                <div class="form-group">
+                  <i class="fas fa-globe fa-lg text-warning"></i>
+                  <input type="text"  class="form-control" placeholder="Website" value="">
+                </div>
+              </div>
+              <div class="col-md-4 px-md-1">
+                <div class="form-group">
+                  <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                  <input  type="text"   class="form-control" placeholder="twitter" value="">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 pr-md-1">
+                <div class="form-group">
+                  <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                  <input type="text"  class="form-control" placeholder="instagram" value="">
+                </div>
+              </div>
+              <div class="col-md-4 px-md-1">
+                <div class="form-group">
+                  <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                  <input  type="text"   class="form-control" placeholder="facebook" value="">
+                </div>
+              </div>
+            </div>
+            Les mots de passe ne sont pas enregistrés en clair, ce qui ne permet pas d’afficher le mot de passe de cet utilisateur, mais il est possible de le changer en utilisant<a href="{% url 'changePassword' %}"> ce formulaire</a>. 
+          </form>
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-fill btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+            class="rounded-circle img-fluid" style="width: 150px;">
+          <h5 class="my-3"> id {{ request.user.id }} : {{ request.user.username }}</h5>
+          <p class="text-muted mb-1">About me</p>
+          <p class="text-muted mb-4">{{ request.user.email }}</p>
+          <div class="d-flex justify-content-center mb-2">
+            <a  href="#"> <button type="button" class="btn btn-outline-primary ms-1" >Upload picture</button></a>
+          </div>
+          <div class="d-flex justify-content-center mb-2">
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  
+
+{% endblock %}

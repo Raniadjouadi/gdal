@@ -1,0 +1,44 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Task update
+{% endblock %}
+
+{% block content %}
+
+{% comment %} {% extends 'base.html' %}
+
+{% block title %}
+    Modifier Projet
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %} {% endcomment %}
+
+    <h1>Progression update</h1>
+    <div class="mb-3">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <button class="btn btn-primary">Update</button>
+        </form>
+
+    </div>
+    <script>
+        var taskid = {{ t_id.id }};
+        document.getElementById("input_tache").value = taskid;
+    
+    
+    
+    </script>
+
+
+{% comment %} {% else %}
+    <h1>Vous n'êtes pas autorisé à appoeter des modifications sur les données!</h1>
+{% endif %}
+{% endcomment %}
+
+{% endblock %}

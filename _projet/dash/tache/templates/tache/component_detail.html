@@ -1,0 +1,378 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Component detail
+{% endblock %}
+
+{% block content %}
+
+<p><small><small>
+    <a href = "{% url 'tache:axes-list' %}">Axes</a> | 
+    <a href = "{% url 'tache:axe-detail' parent.0.axe_id %}">{{parent.0.axe}}</a> | 
+    <a href = "{% url 'tache:project-detail' parent.0.project_id %}">{{parent.0.project}}</a>
+    </small></small></p>
+
+<h1>Component</h1>
+{% if entitie_id != 5 %}
+{% else %}
+<small><small><a href="{% url 'tache:component-update' parent.0.project_id object.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:component-delete' parent.0.project_id object.pk %}">(Delete)</a></small></small>
+{% endif %}
+<br>
+<ul>
+    <li>component: {{ object.component}}</li>
+    <li>description: {{ object.description}}</li>
+    <li>project: {{ object.project}}</li>
+    {% if entitie_id != 5 %}
+              {% if Budget == 0 %}
+              <table class="table">
+                  <thead>
+                    <tr>           
+                      <th scope="col">Budget total de la composante</th>
+                      <th scope="col">Budget alloué à {{Entite}}-{{Role_Entite}} </th>       
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>            
+                      <td>{{ object.budget }}</td>
+                      <td>{{ Budget }}</td>
+                    </tr>
+                    <tr>           
+                  </tbody>
+                </table>
+              {% else %}
+              <h3>Exécution du budget :</h3>
+              <div align=center>
+                <table width="100%" border="1">
+                  <tbody >
+                    <tr>
+                      <td width="40%">
+                        <div class="col-sm-8">
+                          <canvas id="Budgetchart" width="100%" height="100"></canvas>
+                        </div>
+                      </td>
+                      <td width="60%">
+                        <div class="col-sm-6">
+                          <table class="table">
+                            <thead>
+                              <tr>           
+                                <th scope="col">Budget total</th>
+                                <th scope="col">Budget alloué à {{Entite}}-{{Role_Entite}} </th>
+                                <th scope="col">Budget réservé </th>
+                                <th scope="col">Budget engagé </th>
+                                <th scope="col">Budget consommé </th>
+                                <th scope="col">Budget restant </th>       
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>            
+                                <td>{{ object.budget }}</td>
+                                <td>{{ Budget }}</td>
+                                <td>{{ budget_reserve }}</td>
+                                <td>{{ budget_engage }}</td>
+                                <td>{{ budget_consome }}</td>
+                                <td>{{ budget_restant }}</td>
+                              </tr>           
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              {% endif %}
+      {% else %}
+      <h3>Exécution du budget par entité:</h3>
+  <div align=center>
+    <table width="100%" border="1">
+      <tbody >
+        <tr>
+          <td width="40%">
+            <div class="col-sm-12">
+              <canvas id="Budgetchart" width="100%" height="100"></canvas>
+            </div>
+          </td>
+          <td width="60%">
+            <div class="col-sm-6">
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col">Entité</th>           
+                    <th scope="col">Budget total</th>
+                    <th scope="col">Budget réservé </th>
+                    <th scope="col">Budget engagé </th>
+                    <th scope="col">Budget consommé </th>
+                    <th scope="col">Budget restant </th>        
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>            
+                    {% for budget in Budget_Comp %}
+                    <tr>
+                      {% for valeur in budget %}
+                            <td>{{ valeur}}</td>                      
+                      {%endfor%}
+                    </tr>
+                      <tr>
+                    {%endfor%}
+                  </tr>           
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+        {% endif %}
+    
+</ul>
+{% if entitie_id != 5 %}
+        {% if Budget == 0 %}
+
+            <p><h2>{{Entite}}-{{Role_Entite}} n'a pas de Outcome à inscri dans cette Composante  </h2>
+        {% else %}
+        <br>
+
+        <hr>  
+        <h2>Liste des résultats :</h2>
+        <ul>
+          {% if taux_Results %} 
+          <ul>
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col"><CENTER>Results</CENTER> </th>
+                    <th scope="col"><CENTER>Budget</CENTER> </th>
+          
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for taux_Result in taux_Results %}
+                  <tr>            
+                    <td><CENTER><a href="{% url 'tache:result-detail' taux_Result.0 %}">{{ taux_Result.1}}</a></CENTER></td>
+                    <td><CENTER>{{ taux_Result.2 }}</CENTER></td>
+
+                  </tr>
+                  <tr>                        
+                      {% endfor %}          
+                  </tbody>
+                </table>
+          </ul>
+          {% endif %}
+          <hr>
+          <h4>Progression de la durée consommée dédiée à la Composante :</h4>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" aria-label="Info example" style="min-width: 2em; width:{{ prog_duree }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ prog_duree }}%</div>
+                </div>
+                  <h4>Progression globale des travaux de la composante : </h4>
+                  {% if Etat == "pas de retard" %}
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "tache cloturée" %}
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "risque de retard" %}
+                  <h6>Il y a un risque de retard dans l'exécution des travaux de cette activité !</h6>
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "en retard"%}
+                  <h6>L'exécution des travaux de cette activité sont en retard !</h6>
+                  <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+                  </div>
+                  {% endif %}
+          
+          <hr>              
+          <p><h2>Progression des travaux par résultat : </h2>
+            {% if taux_Results %}
+
+            <ul>
+                <table class="table">
+                  <thead>
+                    <tr>           
+                      <th scope="col"><CENTER>Results</CENTER> </th>
+                      <th scope="col"><CENTER>Progression</CENTER> </th>
+                      
+
+              
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for taux_Result in taux_Results %}
+                    <tr>            
+                      <td><CENTER><a href="{% url 'tache:result-detail' taux_Result.0 %}">{{ taux_Result.1}}</a></CENTER></td>
+                      <td><CENTER><div class="progress">
+                        {% if taux_Result.4 == "pas de retard" %}                              
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ taux_Result.3 }}%" aria-valuenow="{{ taux_Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ taux_Result.3 }}%</div>                             
+                      {% endif %}
+                      {% if taux_Result.4 == "Result cloturée" %}
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ taux_Result.3 }}%" aria-valuenow="{{ taux_Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ taux_Result.3 }}%</div>
+                      {% endif %}
+                      {% if taux_Result.4 == "risque de retard" %}
+                        <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ taux_Result.3 }}%" aria-valuenow="{{ taux_Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ taux_Result.3 }}%</div>
+                      {% endif %}
+                      {% if taux_Result.4 == "en retard"%}
+                        <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ taux_Result.3 }}%" aria-valuenow="{{ taux_Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ taux_Result.3 }}%</div>
+                      {% endif %}
+                      </div></CENTER></td>
+                      
+                    <tr>
+                
+                {% endfor %}          
+          </tbody>
+        </table>
+   </ul>
+        {% endif %}
+
+
+        {% endif %}
+{% else %}
+    <br>
+    <h2>Liste des résultats :</h2>
+    <small><small><a href="{% url 'tache:result-add' object.pk %}">(Add Result)</a></small></small>       
+          <ul>
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col"><CENTER>Outcomes</CENTER> </th>
+                    <th scope="col"><CENTER>Budget</CENTER> </th>
+
+                    <th scope="col"><CENTER>      </CENTER></th>
+                    <th scope="col"><CENTER>      </CENTER></th>
+            
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for Outcome in object.results_set.all %}
+                  <tr>            
+                    <td><CENTER><a href="{% url 'tache:result-detail' Outcome.id %}">{{ Outcome }}</a></CENTER></td>
+                    <td><CENTER>{{ Outcome.budget }}</CENTER></td>
+                    <td><CENTER><a href="{% url 'tache:result-update' object.id  Outcome.id %}">(Update)</a></CENTER></td>
+                    <td><CENTER><a href="{% url 'tache:result-delete' object.id Outcome.id %}">(Delete)</CENTER></td>
+                  </tr>
+                  <tr>  
+                      
+                  {% endfor %}          
+                  </tbody>
+                </table>
+          </ul>
+
+        </ul>
+    <hr>
+    <h4>Progression de la durée consommée dédiée à la Composante :</h4>
+    <div class="progress">
+      <div class="progress-bar bg-info" role="progressbar" aria-label="Info example" style="min-width: 2em; width:{{ prog_duree }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ prog_duree }}%</div>
+    </div>
+      <h4>Progression globale des travaux de la Composante : </h4>
+      {% if Etat == "pas de retard" %}
+      <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+      </div>
+      {% endif %}
+      {% if Etat == "tache cloturée" %}
+      <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+      </div>
+      {% endif %}
+      {% if Etat == "risque de retard" %}
+      <h6>Il y a un risque de retard dans l'exécution des travaux de cette activité !</h6>
+      <div class="progress">
+        <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+      </div>
+      {% endif %}
+      {% if Etat == "en retard"%}
+      <h6>L'exécution des travaux de cette activité sont en retard !</h6>
+      <div class="progress">
+        <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Comp }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Comp }}%</div>
+      </div>
+      {% endif %}
+    
+    <hr>  
+<p><h2>Progression de la composante par entité :</h2>      
+{% if taux_prog_Comp %}
+
+        <ul>
+            <table class="table">
+              <thead>
+                <tr>           
+                  <th scope="col"><CENTER>Entités</CENTER> </th>
+                  <th scope="col"><CENTER>Progression</CENTER> </th>
+                  
+
+          
+                </tr>
+              </thead>
+              <tbody>
+            {% for Result in taux_prog_Comp %}
+                <tr>            
+                  <td><CENTER>{{ Result.1}}</CENTER></td>
+                  <td><CENTER><div class="progress">
+                    {% if Result.4 == "pas de retard" %}                              
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Result.3 }}%" aria-valuenow="{{ Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Result.3 }}%</div>                             
+                      {% endif %}
+                      {% if Result.4 == "tache cloturée" %}
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Result.3 }}%" aria-valuenow="{{ Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Result.3 }}%</div>
+                      {% endif %}
+                      {% if Result.4 == "risque de retard" %}
+                        <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Result.3 }}%" aria-valuenow="{{ Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Result.3 }}%</div>
+                      {% endif %}
+                      {% if Result.4 == "en retard"%}
+                        <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Result.3 }}%" aria-valuenow="{{ Result.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Result.3 }}%</div>
+                      {% endif %}
+                  </div></CENTER></td>
+                  
+                <tr>
+            
+            {% endfor %}          
+        </tbody>
+      </table>
+</ul>
+{% endif %} 
+{% endif %}
+{% endblock %}
+{%block scripts%}
+    
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script type="text/javascript">
+    var ctx = document.getElementById('Budgetchart').getContext('2d');
+    var Budgetchart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: {{ labels|safe }},
+          datasets: [{
+            label: 'Dataset 1',
+            data: {{ data|safe }},
+            backgroundColor: [
+              'rgb(255, 205, 86)', 
+              'rgb(54, 162, 235)', 
+              'rgb(0, 255, 0)', 
+              'rgb(255, 99, 132)'
+            ],
+  
+          }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'left',
+              },
+              title: {
+                display: true,
+                text: 'Exécution du budget'
+              }
+            }
+          },
+    })
+  </script>
+
+{%endblock scripts%}
+    

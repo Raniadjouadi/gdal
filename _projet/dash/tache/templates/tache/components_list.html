@@ -1,0 +1,21 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Components list
+{% endblock %}
+
+{% block content %}
+<h1>Components list</h1>
+<small><small><a href="{% url 'tache:component-add' %}">(Add Component)</a></small></small>
+<ul>
+    {% for component in object_list %}
+    <li>
+        <a href="{% url 'tache:component-detail' component.id %}">{{ component }}</a>
+        - <small><small><a href="{% url 'tache:component-update' component.pk %}">(Update)</a></small></small> - 
+        <small><small><a href="{% url 'tache:component-delete' component.pk %}">(Delete)</a></small></small>
+</li>
+    {% endfor %}
+</ul>
+
+<small><small><a href="{% url 'tache:component-add' %}">(Add Component)</a></small></small>
+{% endblock %}

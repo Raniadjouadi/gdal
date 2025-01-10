@@ -1,0 +1,39 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Project update
+{% endblock %}
+
+{% block content %}
+
+{% comment %} {% extends 'base.html' %}
+
+{% block title %}
+    Modifier Projet
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %} {% endcomment %}
+
+    <h1>Project update</h1>
+    <div class="mb-3">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Update</button>
+        </form>
+
+    </div>
+
+    <script>
+        var axe_id = {{ axe.id }};
+        document.getElementById("input_axe").value = axe_id;
+    </script>
+{% comment %} {% else %}
+    <h1>Vous n'êtes pas autorisé à appoeter des modifications sur les données!</h1>
+{% endif %}
+{% endcomment %}
+
+{% endblock %}

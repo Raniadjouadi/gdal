@@ -1,0 +1,47 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Project add
+{% endblock %}
+
+{% block content %}
+<h1>Add Project...</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Add</button>
+</form>
+<script>
+    var axe_id = {{ axe.id }};
+    document.getElementById("input_axe").value = axe_id;
+
+    function lorem (number){
+        var words =["Lorem" , "ipsum" , "dolor" , "sit" , "amet," , "consectetur" , "adipiscing" , "elit." , "Proin" , "arcu" , "libero," , "bibendum" , "ac" , "sollicitudin" , "vitae," , "molestie" , "eget" , "massa." , "Nulla" , "facilisi." , "Cras" , "dapibus" , "sem" , "vulputate" , "laoreet" , "pellentesque." , "Suspendisse" , "potenti." , "Pellentesque" , "laoreet" , "ligula" , "in" , "iaculis" , "bibendum." , "Sed" , "convallis" , "quam" , "est," , "sit" , "amet" , "tempor" , "mi" , "scelerisque" , "sed." , "Praesent" , "sed" , "ipsum" , "vel" , "leo" , "aliquam" , "pharetra" , "sed" , "vestibulum" , "nisl.Fusce" , "condimentum" , "in" , "magna" , "eget" , "imperdiet." , "Donec" , "sagittis" , "dolor" , "a" , "nisi" , "accumsan" , "lobortis." , "Suspendisse" , "potenti." , "Nunc" , "congue" , "purus" , "tempus" , "urna" , "tristique," , "ut" , "tempus" , "lectus" , "consequat." , "Mauris" , "nec" , "eleifend" , "lacus," , "at" , "congue" , "neque." , "Morbi" , "dignissim" , "tellus" , "sed" , "libero" , "dignissim," , "ut" , "tincidunt" , "odio" , "sollicitudin." , "Duis" , "volutpat" , "nibh" , "neque," , "in" , "laoreet" , "nisl" , "tincidunt" , "quis." , "Phasellus" , "placerat" , "lectus" , "et" , "imperdiet" , "luctus." , "Curabitur" , "a" , "consequat" , "erat." , "Suspendisse" , "potenti." , "Aenean" , "volutpat," , "tortor" , "vitae" , "mattis" , "maximus," , "massa" , "enim" , "euismod" , "est," , "non" , "eleifend" , "justo" , "felis" , "sed" , "ipsum." , "Aliquam" , "luctus" , "sed" , "lorem" , "vel" , "feugiat." , "Phasellus" , "lorem" , "felis," , "gravida" , "efficitur" , "mauris" , "eget," , "aliquet" , "malesuada" , "ipsum." , "Aliquam" , "semper" , "in" , "est" , "non" , "vehicula.Nulla" , "vitae" , "tellus" , "lectus." , "Sed" , "pretium" , "lacus" , "erat," , "sed" , "ornare" , "augue" , "consectetur" , "ut." , "Nam" , "ac" , "felis" , "mattis," , "malesuada" , "velit" , "et," , "rhoncus" , "tellus." , "Cras" , "eu" , "diam" , "lacus." , "Integer" , "tincidunt," , "enim" , "a" , "imperdiet" , "molestie," , "neque" , "mi" , "tempor" , "mauris," , "in" , "placerat" , "lacus" , "diam" , "id" , "risus." , "Duis" , "consectetur" , "dui" , "felis." , "Proin" , "ac" , "elementum" , "est," , "vulputate" , "auctor" , "diam." , "Maecenas" , "mauris" , "tortor," , "consectetur" , "at" , "hendrerit" , "eget," , "pretium" , "vel" , "ipsum." , "Proin" , "a" , "odio" , "consectetur," , "consequat" , "ligula" , "vel," , "convallis" , "magna.Etiam" , "tempor" , "arcu" , "quis" , "rhoncus" , "consequat." , "Nulla" , "porta" , "dolor" , "magna," , "sit" , "amet" , "convallis" , "enim" , "sollicitudin" , "quis." , "Donec" , "mollis" , "mi" , "a" , "sagittis" , "eleifend." , "Fusce" , "vel" , "mollis" , "dolor." , "Aenean" , "fermentum" , "arcu" , "rutrum" , "est" , "suscipit," , "non" , "dignissim" , "odio" , "mollis." , "Ut" , "ultrices" , "purus" , "augue," , "ac" , "lacinia" , "urna" , "fringilla" , "ut." , "Integer" , "tempor" , "malesuada" , "risus," , "in" , "condimentum" , "nunc" , "pretium" , "ut." , "Suspendisse" , "vel" , "nisl" , "ipsum." , "Nam" , "blandit" , "placerat" , "tincidunt." , "Pellentesque" , "eu" , "est" , "vel" , "sapien" , "venenatis" , "suscipit." , "Fusce" , "in" , "enim" , "consequat" , "dui" , "posuere" , "dapibus.Phasellus" , "et" , "fermentum" , "justo." , "Nam" , "at" , "sem" , "urna." , "In" , "aliquam" , "lectus" , "quis" , "velit" , "imperdiet" , "congue." , "Aenean" , "facilisis" , "faucibus" , "sem" , "sed" , "suscipit." , "Aenean" , "molestie" , "mattis" , "nibh," , "ut" , "mattis" , "metus." , "Nam" , "vel" , "elit" , "quis" , "lorem" , "tempus" , "facilisis" , "a" , "non" , "augue." , "Morbi" , "mollis" , "mi" , "eget" , "volutpat" , "vulputate." , "Nunc" , "tincidunt" , "nulla" , "sodales" , "aliquet" , "ultricies." , "Suspendisse" , "nisi" , "odio," , "finibus" , "interdum" , "efficitur" , "ut," , "blandit" , "et" , "augue."],
+        punctuation = [".", ","],
+        text = "",
+        phrase,
+        punc,
+        count = 0,
+        nextCapital = true;
+        while(count<number) {
+            phrase = words[Math.floor(Math.random() * words.length)]
+            text += nextCapital ? phrase[0].toUpperCase() + phrase.slice(1): phrase;
+            nextCapital = false;
+            if ( Math.random() > .8 ) {
+                punc = punctuation[Math.floor(Math.random() * punctuation.length)];
+                if ( punc === "." ) nextCapital = true;
+                text += punc;
+            }
+            text += " ";
+            count = text.match(/\S+/g).length;
+        }
+        return text;
+
+    }
+    document.getElementById("id_reference_code").value = lorem(1);
+    document.getElementById("id_acronym").value = lorem(1);
+    document.getElementById("id_name").value = lorem(10);
+    document.getElementById("id_objective").value = lorem(100);
+    document.getElementById("id_background_context").value = lorem(200);
+</script>
+{% endblock %}

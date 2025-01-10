@@ -1,0 +1,29 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Entity Detail
+{% endblock %}
+
+{% block content %}
+
+<h1>Entity detail</h1>
+<small><small><a href="{% url 'tache:entity-update' object.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:entity-delete' object.pk %}">(Delete)</a></small></small>
+
+<br>
+<ul>
+    <li>acronym: {{ object.acronym }}</li>
+    <li>name: {{ object.name_en }}</li>
+    <li>nom: {{ object.nom_fr }}</li>
+    <li>nationality: {{ object.nationality }}</li>
+    <li>Email Address: {{ object.email_address }}</li>
+    <li>Phone number: </li>
+    <ul>
+        {% for num in object.phone_number.all %}
+        <li>{{ num.phone_type }}: {{ num }}</li>
+        {% endfor %}
+    </ul>
+    <li>Address: {{ object.postal_address }}</li>
+    <li>Web Site: {{ object.web_site }}</li>
+</ul>
+{% endblock %} 

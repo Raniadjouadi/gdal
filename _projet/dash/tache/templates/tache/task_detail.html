@@ -1,0 +1,100 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Task detail
+{% endblock %}
+
+{% block content %}
+<p><small><small>
+<a href = "{% url 'tache:axes-list' %}">Axes</a>
+| <a href = "{% url 'tache:axe-detail' parent.0.axe_id %}">{{parent.0.axe}}</a>
+| <a href = "{% url 'tache:project-detail' parent.0.project_id %}">{{parent.0.project}}</a>
+| <a href = "{% url 'tache:component-detail' parent.0.component_id %}">{{parent.0.component|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:result-detail' parent.0.result_id %}">{{parent.0.result|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:product-detail' parent.0.product_id %}">{{parent.0.product|truncatewords:3}}...</a>
+| <a href = "{% url 'tache:activity-detail' parent.0.activity_id %}">{{parent.0.activity|truncatewords:3}}...</a>
+</small></small></p>
+<h1>Task</h1>
+<small><small><a href="{% url 'tache:task-update' parent.0.activity_id object.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:task-delete' parent.0.activity_id object.pk %}">(Delete)</a></small></small>
+
+<br>
+<ul>
+    <li>task: {{ object.task}}</li>
+    <li>responsible: {{ object.responsible}}</li>
+    <li>objective: {{ object.objective}}</li>
+    <li>description: {{ object.description|truncatewords:50}}</li>
+    <li>budget: {{ object.budget}}</li>
+    <li>date_due_debut: {{ object.date_due_debut}}</li>
+    <li>date_due_fin: {{ object.date_due_fin}}</li>
+    <li>activity: {{ object.activity}}</li>
+</ul>
+
+<hr>
+<h4>Progression de la durée consommée de la tache:</h4>
+<div class="progress">
+  <div class="progress-bar bg-info" role="progressbar" aria-label="Info example" style="min-width: 2em; width:{{ prog_duree }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ prog_duree }}%</div>
+</div>
+
+  <h4>Progression des travax de la tache : </h4>
+  {% if Etat == "pas de retard" %}
+  <div class="progress">
+    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ tache }}%" aria-valuenow="{{ tache }}" aria-valuemin="0" aria-valuemax="100">{{ tache }}%</div>
+  </div>
+  {% endif %}
+  {% if Etat == "tache cloturée" %}
+  <div class="progress">
+    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ tache }}%" aria-valuenow="{{ tache }}" aria-valuemin="0" aria-valuemax="100">{{ tache }}%</div>
+  </div>
+  {% endif %}
+  {% if Etat == "risque de retard" %}
+  <h6>Il y a un risque de retard dans l'exécution des travaux de cette tache !</h6>
+  <div class="progress">
+    <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ tache }}%" aria-valuenow="{{ tache }}" aria-valuemin="0" aria-valuemax="100">{{ tache }}%</div>
+  </div>
+  {% endif %}
+  {% if Etat == "en retard"%}
+  <h6>L'exécution des travaux de cette tache sont en retard !</h6>
+  <div class="progress">
+    <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ tache }}%" aria-valuenow="{{ tache }}" aria-valuemin="0" aria-valuemax="100">{{ tache }}%</div>
+  </div>
+  {% endif %}
+
+  <h4>Progression Phases:</h4>
+  <small><small><a href="{% url 'tache:progression-add' object.id %}">(Add Progression)</a></small></small>
+
+
+  {% if progression %}
+  
+  <ul>
+      <table class="table">
+          <thead>
+            <tr>           
+              <th scope="col"><CENTER>Phases</CENTER> </th>
+              <th scope="col"><CENTER>Taux de progression %</CENTER> </th>
+              <th scope="col"><CENTER> Date  </CENTER></th>
+              <th scope="col"><CENTER>      </CENTER></th>
+              <th scope="col"><CENTER>      </CENTER></th>
+      
+            </tr>
+          </thead>
+          <tbody>
+              {% for progress in progression %}
+            <tr>            
+              <td><CENTER><a href="{% url 'tache:progression-detail' progress.0 %}">{{ progress.2}}</a></CENTER></td>
+              <td><CENTER><div class="progress">
+                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width:{{ progress.3}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ progress.3}}%</div>
+              </div></CENTER></td>
+              <td><CENTER>{{ progress.4 }}</CENTER></td>
+              <td><CENTER><a href="{% url 'tache:progression-update' object.id progress.0 %}">(Update)</a></CENTER></td>
+              <td><CENTER><a href="{% url 'tache:progression-delete' object.id progress.0 %}">(Delete)</CENTER></td>
+            </tr>
+            <tr> 
+              
+              {% endfor %}          
+          </tbody>
+        </table>
+  </ul>
+  {% endif %} 
+</div> 
+{% endblock %}

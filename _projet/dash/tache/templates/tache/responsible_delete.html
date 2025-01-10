@@ -1,0 +1,33 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+    Responsible Delete
+{% endblock %}
+
+{% block content %}
+
+{% comment %} {% extends 'base.html' %}
+
+{% block title %}
+    Supprimer Projet
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %} {% endcomment %}
+
+    <h1>You're about to delete  "{{ responsibles }}". <br> Are you sure?</h1>
+    <div class="mb-3">
+
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary">Delete</button>
+        </form>
+
+    </div>
+
+    
+{% comment %} {% else %}
+    <h1>Vous n'êtes pas autorisé à appoeter des modifications sur les données!</h1>
+{% endif %} {% endcomment %}
+
+{% endblock %}

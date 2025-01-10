@@ -1,0 +1,493 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Project detail
+{% endblock %}
+
+{% block content %}
+<p><small><small>
+    <a href = "{% url 'tache:axes-list' %}">Axes</a> | 
+    <a href = "{% url 'tache:axe-detail' parent.0.axe_id %}">{{parent.0.axe}}</a>
+    </small></small></p>
+
+<h1>{{ object.acronym }} Project</h1>
+{% if entitie_id != 5 %}
+{% else %}
+<small><small><a href="{% url 'tache:project-update' parent.0.axe_id object.pk %}">(Update)</a></small></small> - 
+<small><small><a href="{% url 'tache:project-delete' parent.0.axe_id object.pk %}">(Delete)</a></small></small>
+{% endif %}
+<br>
+<div>
+	<table width="80%" border="0" cellspacing="5" cellpadding="15">
+  		<tbody>
+			<tr>
+			    <td width="50%">
+                    <ul>
+                        <li>Reference code: {{ object.reference_code}}</li>
+                        <li>Acronym: {{ object.acronym}}</li>
+                        <li>name: {{ object.name}}</li>
+                        <li>objective: {{ object.objective|truncatewords:20}} ...</li>
+                        <li>Background and context: {{ object.background_context|truncatewords:20}}...</li>
+                        <li>Project manager: {{ object.project_manager}}</li>
+                        <li>executing_entity: {{ object.executing_entity}}</li>
+                        <li>funder: {{ object.funder}}</li>
+                         
+                        <li>date_debut: {{ object.date_debut }}</li>
+                        <li>date_debut_execution: {{ object.date_debut_execution}}</li>
+                        <li>date_closing: {{ object.date_closing}}</li>
+                        <li>date_final_evaluation: {{ object.date_final_evaluation}}</li>
+                        <li>Axe: {{ object.axe}}</li>
+                    </ul>
+                </td>
+			    <td align="right" width="50%">
+                    <div id="map" class="map"></div>
+                </td>
+			</tr>
+  		</tbody>
+	</table>
+</div>
+<div>
+  <h3>Exécution du budget :</h3>
+  {% if entitie_id != 5 %}
+  <div align=center>
+    <table width="100%" border="1">
+      <tbody >
+        <tr>
+          <td width="40%">
+            <div class="col-sm-8">
+              <canvas id="Budgetchart" width="100%" height="100"></canvas>
+            </div>
+          </td>
+          <td width="60%">
+            <div class="col-sm-6">
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col">Budget total</th>
+                    <th scope="col">Budget alloué à {{Entite}}-{{Role_Entite}} </th>
+                    <th scope="col">Budget réservé </th>
+                    <th scope="col">Budget engagé </th>
+                    <th scope="col">Budget consommé </th>
+                    <th scope="col">Budget restant </th>       
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>            
+                    <td>{{ object.budget }}</td>
+                    <td>{{ Budget }}</td>
+                    <td>{{ budget_reserve }}</td>
+                    <td>{{ budget_engage }}</td>
+                    <td>{{ budget_consome }}</td>
+                    <td>{{ budget_restant }}</td>
+                  </tr>           
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% else %}
+{% if Budget_Projet %}
+  <div align=center>
+    <table width="100%" border="1">
+      <tbody >
+        <tr>
+          <td width="40%">
+            <div class="col-sm-12">
+              <canvas id="Budgetchart" width="100%" height="100"></canvas>
+            </div>
+          </td>
+          <td width="60%">
+            <div class="col-sm-6">
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col">Entité</th>           
+                    <th scope="col">Budget total</th>
+                    <th scope="col">Budget réservé </th>
+                    <th scope="col">Budget engagé </th>
+                    <th scope="col">Budget consommé </th>
+                    <th scope="col">Budget restant </th>        
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>            
+                    {% for budget in Budget_Projet %}
+                    <tr>
+                      {% for valeur in budget %}
+                            <td>{{ valeur}}</td>                      
+                      {%endfor%}
+                    </tr>
+                      <tr>
+                    {%endfor%}
+                  </tr>           
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  {% else %}
+  <h4>Au qu’un budget n’est alloué à ce projet ! </h4>
+  {% endif %}
+
+{% endif %}
+</div>
+
+{% if entitie_id != 5 %}
+<ul>
+
+    <hr>  
+    
+    <ul>
+      {% if Progress_Compoments %} 
+      <h2>Liste des composantes du projet :</h2>
+      <ul>
+          <table class="table">
+            <thead>
+              <tr>           
+                <th scope="col"><CENTER>Composantes</CENTER> </th>
+                <th scope="col"><CENTER>Budget</CENTER> </th>
+      
+              </tr>
+            </thead>
+            <tbody>
+                {% for Component in Progress_Compoments %}
+              <tr>            
+                <td><CENTER><a href="{% url 'tache:component-detail' Component.0 %}">{{ Component.1}}</a></CENTER></td>
+                <td><CENTER>{{ Component.2 }}</CENTER></td>
+
+              </tr>
+              <tr>                        
+                  {% endfor %}          
+              </tbody>
+            </table>
+      </ul>
+      {% endif %}
+      <hr>
+      <h4>Progression de la durée consommée dédiée au Projet :</h4>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" aria-label="Info example" style="min-width: 2em; width:{{ prog_duree }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ prog_duree }}%</div>
+                </div>
+                  <h4>Progression globale des travaux du Projet : </h4>
+                  {% if Etat == "pas de retard" %}
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "tache cloturée" %}
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "risque de retard" %}
+                  <h6>Il y a un risque de retard dans l'exécution des travaux du projet !</h6>
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+                  </div>
+                  {% endif %}
+                  {% if Etat == "en retard"%}
+                  <h6>L'exécution des travaux du projet sont en retard !</h6>
+                  <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+                  </div>
+                  {% endif %}
+      <hr>              
+      <p><h2>Progréssion des travaux par composante : </h2>
+        {% if Progress_Compoments %}
+
+        <ul>
+            <table class="table">
+              <thead>
+                <tr>           
+                  <th scope="col"><CENTER>Composantes </CENTER> </th>
+                  <th scope="col"><CENTER>Progréssion</CENTER> </th>
+                  
+
+          
+                </tr>
+              </thead>
+              <tbody>
+                  {% for Component in Progress_Compoments %}
+                <tr>            
+                  <td><CENTER><a href="{% url 'tache:component-detail' Component.0 %}">{{ Component.1}}</a></CENTER></td>
+                  <td><CENTER><div class="progress">
+                      {% if Component.4 == "pas de retard" %}                              
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Component.3 }}%" aria-valuenow="{{ Component.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Component.3 }}%</div>                             
+                      {% endif %}
+                      {% if Component.4 == "Comp cloturée" %}
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Component.3 }}%" aria-valuenow="{{ Component.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Component.3 }}%</div>
+                      {% endif %}
+                      {% if Component.4 == "risque de retard" %}
+                        <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Component.3 }}%" aria-valuenow="{{ Component.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Component.3 }}%</div>
+                      {% endif %}
+                      {% if Component.4 == "en retard"%}
+                        <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Component.3 }}%" aria-valuenow="{{ Component.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Component.3 }}%</div>
+                      {% endif %}
+                  </div></CENTER></td>
+                  
+                <tr>
+            
+            {% endfor %}          
+      </tbody>
+    </table>
+</ul>
+    {% endif %}
+
+
+    {% else %}
+    <hr> 
+    <small><small><a href="{% url 'tache:component-add' object.id %}">(Add Component)</a></small></small>
+            <hr>  
+       
+        <ul>
+          {% if object.components_set.all %} 
+          <h2>Liste des composantes du projet :</h2>
+          <ul>
+              <table class="table">
+                <thead>
+                  <tr>           
+                    <th scope="col"><CENTER>Composantes</CENTER> </th>
+                    <th scope="col"><CENTER>Budget</CENTER> </th>
+          
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for Component in object.components_set.all %}
+                  <tr>            
+                    <td><CENTER><a href="{% url 'tache:component-detail' Component.id %}">{{ Component.component}}</a></CENTER></td>
+                    <td><CENTER>{{ Component.budget }}</CENTER></td>
+    
+                  </tr>
+                  <tr>                        
+                      {% endfor %}          
+                  </tbody>
+                </table>
+          </ul>
+          {% endif %}
+         
+          {% if prog_duree %}
+          <hr>
+          <h4>Progression de la durée consommée dédiée au Projet :</h4>
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" aria-label="Info example" style="min-width: 2em; width:{{ prog_duree }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ prog_duree }}%</div>
+          </div>
+            <h4>Progression globale des travaux du Projet : </h4>
+            {% if Etat == "pas de retard" %}
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+            </div>
+            {% endif %}
+            {% if Etat == "tache cloturée" %}
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+            </div>
+            {% endif %}
+            {% if Etat == "risque de retard" %}
+            <h6>Il y a un risque de retard dans l'exécution des travaux du projet !</h6>
+            <div class="progress">
+              <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Prog_Comp }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+            </div>
+            {% endif %}
+            {% if Etat == "en retard"%}
+            <h6>L'exécution des travaux du projet sont en retard !</h6>
+            <div class="progress">
+              <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Prog_Project }}%" aria-valuenow="{{ Prog_Project }}" aria-valuemin="0" aria-valuemax="100">{{ Prog_Project }}%</div>
+            </div>
+            {% endif %}
+            <hr> 
+            {% endif %}
+                      
+          
+            {% if Progress_Projects %}
+            <p><h4>Progréssion des travaux du projet par entité : </h4>
+            <ul>
+                <table class="table">
+                  <thead>
+                    <tr>           
+                      <th scope="col"><CENTER>Entités</CENTER> </th>
+                      <th scope="col"><CENTER>Progression</CENTER> </th>
+                      
+    
+              
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for Projet in Progress_Projects %}
+                    <tr>            
+                      <td><CENTER>{{ Projet.1}}</CENTER></td>
+                      <td><CENTER><div class="progress">
+                      {% if Projet.4 == "pas de retard" %}                              
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ CompProjetonent.3 }}%" aria-valuenow="{{ Projet.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Projet.3 }}%</div>                             
+                      {% endif %}
+                      {% if Projet.4 == "Comp cloturée" %}
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" style="min-width: 2em; width:{{ Projet.3 }}%" aria-valuenow="{{ Projet.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Projet.3 }}%</div>
+                      {% endif %}
+                      {% if Projet.4 == "risque de retard" %}
+                        <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning example" style="min-width: 2em; width:{{ Projet.3 }}%" aria-valuenow="{{ Projet.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Projet.3 }}%</div>
+                      {% endif %}
+                      {% if Projet.4 == "en retard"%}
+                        <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger example" style="min-width: 2em; width:{{ Projet.3 }}%" aria-valuenow="{{ Projet.3 }}" aria-valuemin="0" aria-valuemax="100">{{ Projet.3 }}%</div>
+                      {% endif %}
+                      </div></CENTER></td>
+                      
+                    <tr>
+                
+                {% endfor %}          
+          </tbody>
+        </table>
+    </ul>
+        {% endif %} 
+    {% endif %}
+</ul>
+
+<script type="text/javascript">
+
+    window.onload = init;
+
+    function init(){
+
+      const fillStyle = new ol.style.Fill({ color: [250, 188, 50, .2] })
+      const strokeStyle = new ol.style.Stroke({ color: [0, 130, 196, 0], width: .5 })
+      const circleStyle = new ol.style.Circle({
+        fill: new ol.style.Fill({color: [245, 49, 5, 0.5]}),
+        radius: 3,
+        stroke: new ol.style.Stroke({ color: [0, 0, 45, 1], width: 1 })
+      })
+
+      var sourceaoi = new ol.source.Vector()
+
+      var layeraoi = new ol.layer.Vector({
+        source: sourceaoi,
+        title: 'AOIS',
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var sourcepp = new ol.source.Vector()
+      
+      var layerpp = new ol.layer.Vector({
+        source: sourcepp,
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var layerosm = new ol.layer.Tile({source: new ol.source.OSM()})
+      const openStreetMapStandard = new ol.layer.Tile({
+        source: new ol.source.OSM(),
+        visible: false,
+        title: 'OSMStandard'
+      })
+
+      const map = new ol.Map({
+        view: new ol.View({
+            center: [ 10, 9 ],
+            zoom: 6,
+            projection: 'EPSG:4326'
+        }),
+        layers:[
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        target: 'map'
+      })
+
+
+      sourceaoi.addFeatures(
+        new ol.format.GeoJSON().readFeatures({{aoi | safe}}, {
+          dataProjection: 'EPSG:4326',
+        })
+      );
+
+
+      map.addLayer(layeraoi);
+
+      var extentAoi = sourceaoi.getExtent();
+      {% comment %} var extentpp = sourcepp.getExtent(); {% endcomment %}
+      {% comment %} console.log(extentAoi); {% endcomment %}
+      var extentbuffer = new ol.extent.buffer(extentAoi,2);
+      {% comment %} console.log(extentbuffer); {% endcomment %}
+
+      map.getView().fit(extentbuffer, map.getSize());
+
+
+      // Vector Fe1ature Popup Logic 
+      const overlayContainerElement = document.querySelector('.overlay-container');
+      const overlayLayer = new ol.Overlay({
+        element: overlayContainerElement
+      })
+      map. addOverlay(overlayLayer);
+      const overlayFeatureName = document.getElementById('feature-name');
+      //const overlayFeatureAdditionInfo = document.getElementById('feature-additional-info');
+
+      map.on('click', function(e){
+        overlayLayer.setPosition(undefined);
+        map.forEachFeatureAtPixel(e.pixel, function (feature, layer){
+          let clickedCoordinate = e.coordinate;
+          let clickedFeatureName = feature.get('name');
+          //let clickedFeatureAdditionalInfo = feature.get('additional  info');
+          overlayLayer.setPosition(clickedCoordinate); 
+          overlayFeatureName.innerHTML = clickedFeatureName; 
+          //overlayFeatureAdditionInfo.innerHTML = clickedFeatureAdditionalInfo;
+        },
+        {
+          layerFilter: function(layerCandidate){
+            return layerCandidate.get('title') === 'AOIS'
+          }
+        })
+      })
+
+    }
+    </script>
+    <div class="overlay-container">
+        <span class='overlay-text' id='feature-name'></span><br>
+        {% comment %} <span class='overlay-text' id='feature-additional-info'></span><br> {% endcomment %}
+    </div>
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript">
+  var ctx = document.getElementById('Budgetchart').getContext('2d');
+  var Budgetchart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+          label: 'Dataset 1',
+          data: {{ data|safe }},
+          backgroundColor: [
+            'rgb(255, 205, 86)', 
+            'rgb(54, 162, 235)', 
+            'rgb(0, 255, 0)', 
+            'rgb(255, 99, 132)'
+          ],
+
+        }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'left',
+            },
+            title: {
+              display: true,
+              text: 'Exécution du budget'
+            }
+          }
+        },
+  })
+</script>
+
+{%endblock scripts%}

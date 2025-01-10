@@ -1,0 +1,515 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Axe detail
+{% endblock %}
+
+{% block content %}
+<p><small><small>
+    <a href = "{% url 'tache:axes-list' %}">Axes</a>
+    </small></small></p>
+<h1>{{object.name}} Axe</h1>
+
+{% if entitie_id != 5 %}
+<br>
+<p>{{object.description|truncatewords:50}}</p><br>
+<h3>Exécution du budget :</h3>
+<div align=center>
+  <table width="100%" border="1">
+    <tbody >
+        <tr>
+            <td width="40%">
+              <div class="col-sm-8">
+                <canvas id="Budgetchart" width="100%" height="100"></canvas>
+              </div>
+            </td>
+            <td width="60%">
+              <div class="col-sm-6">
+                <table class="table">
+                  <thead>
+                    <tr>           
+                      <th scope="col"><smole>Budget total</smole></th>
+                      <th scope="col">Budget alloué à {{Entite}} </th>
+                      <th scope="col">Budget réservé </th>
+                      <th scope="col">Budget engagé </th>
+                      <th scope="col">Budget consommé </th>
+                      <th scope="col">Budget restant </th>       
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>            
+                      <td>{{ Budget_total }}</td>
+                      <td>{{ Budget }}</td>
+                      <td>{{ budget_reserve }}</td>
+                      <td>{{ budget_engage }}</td>
+                      <td>{{ budget_consome }}</td>
+                      <td>{{ budget_restant }}</td>
+                    </tr>           
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+    {% else %}
+    <small><small><a href="{% url 'tache:axe-update' object.pk %}">(Update)</a></small></small> - 
+    <small><small><a href="{% url 'tache:axe-delete' object.pk %}">(Delete)</a></small></small>
+    <br>
+    <p>{{object.description|truncatewords:50}}</p><br>
+
+    <div align=center>
+      <table width="100%" border="1">
+        <tbody >
+          <tr>
+            <td width="40%">
+              <div class="col-sm-10">
+                <canvas id="Budgetchart" width="100%" height="100"></canvas>
+              </div>
+            </td>
+            <td width="60%">
+              <div class="col-sm-6">
+                <table class="table">
+                  <thead>
+                    <tr>           
+                      <th scope="col">Budget total</th>
+                      <th scope="col">Budget réservé </th>
+                      <th scope="col">Budget engagé </th>
+                      <th scope="col">Budget consommé </th>
+                      <th scope="col">Budget restant </th>        
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>            
+                      <td>{{ Budget_total }}</td>
+                      <td>{{ budget_reserve }}</td>
+                      <td>{{ budget_engage }}</td>
+                      <td>{{ budget_consome }}</td>
+                      <td>{{ budget_restant }}</td>
+                    </tr>           
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+{% endif %}
+{% if entitie_id != 5 %}
+<h2>Carte des projets de l'axe {{object.name|capfirst}} :</h2>
+<div align=center>
+    <table width="80%" border="0">
+        <tbody >
+            <tr>
+                <td align="right" width="80%">
+                    <div id="map" class="map"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<hr>  
+<h2>Liste des projets de l'axe {{object.name|capfirst}} :</h2>
+<ul>
+  {% if prog_projets %} 
+  <ul>
+      <table class="table">
+        <thead>
+          <tr>           
+            <th scope="col"><CENTER>Projets</CENTER> </th>
+            <th scope="col"><CENTER>Budget</CENTER> </th>
+  
+          </tr>
+        </thead>
+        <tbody>
+            {% for taux_Projet in prog_projets %}
+          <tr>            
+            <td><CENTER><a href="{% url 'tache:project-detail' taux_Projet.0 %}">{{ taux_Projet.1}}</a></CENTER></td>
+            <td><CENTER>{{ taux_Projet.2 }}</CENTER></td>
+
+          </tr>
+          <tr>                        
+              {% endfor %}          
+          </tbody>
+        </table>
+  </ul>
+  {% endif %}
+  <hr>
+  <h2>Progréssion globale des travaux de l'Axe {{object.name|capfirst}} :</h2>
+  <td><CENTER><div class="progress">
+    <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width:{{ Progres_Axe }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ Progres_Axe }}%</div>
+  </div></CENTER></td>
+  <hr>              
+  
+    {% if prog_projets %}
+    <p><h2>Progréssion des travaux par projet : </h2>
+    <ul>
+        <table class="table">
+          <thead>
+            <tr>           
+              <th scope="col"><CENTER>Projects</CENTER> </th>
+              <th scope="col"><CENTER>Progression</CENTER> </th>
+              
+
+      
+            </tr>
+          </thead>
+          <tbody>
+              {% for taux_Projet in prog_projets %}
+            <tr>            
+              <td><CENTER><a href="{% url 'tache:project-detail' taux_Projet.0 %}">{{ taux_Projet.1}}</a></CENTER></td>
+              <td><CENTER><div class="progress">
+                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width:{{ taux_Projet.3 }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ taux_Projet.3 }}%</div>
+              </div></CENTER></td>
+              
+            <tr>
+        
+        {% endfor %}          
+  </tbody>
+</table>
+</ul>
+{% endif %}
+
+{% else %}
+<hr>
+<h2><CENTER> Carte des  projets de l'axe {{object.name|capfirst}} </CENTER></h2> 
+  
+<hr>
+<div align=center>
+  <table width="90%" border="2">
+      <tbody >
+          <tr>
+              <td align="right" width="80%">
+                  <div id="map" class="map"></div>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+<hr>
+<h2>Liste des projets de l'axe {{object.name|capfirst}}   
+  <small><small><small><small><a href="{% url 'tache:project-add' object.id %}">(Add Project)</a></small></small></small></small>
+</h2>
+<ul>
+  <table class="table">
+    <thead>
+      <tr>           
+        <th scope="col"><CENTER>Projets</CENTER> </th>
+        <th scope="col"><CENTER>Budget</CENTER> </th>
+        <th scope="col"><CENTER>Date début</CENTER> </th>
+        <th scope="col"><CENTER>Date fin</CENTER> </th>
+        <th scope="col"><CENTER>      </CENTER> </th>
+        <th scope="col"><CENTER>      </CENTER> </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for project in object.projects_set.all %}
+    <tr>            
+      <td><CENTER><a href="{% url 'tache:project-detail' project.id %}">{{ project }}</a></CENTER></td>
+      <td><CENTER>{{ project.budget }}</CENTER></td>
+      <td><CENTER>{{ project.date_debut }}</CENTER></td>
+      <td><CENTER>{{ project.date_closing }}</CENTER></td>
+      <td><CENTER><a href="{% url 'tache:project-update' object.id project.pk %}">(Update)</a></CENTER></td>
+      <td><CENTER><a href="{% url 'tache:project-delete' object.id project.pk %}">(Delete)</a></CENTER></td>
+       <tr>
+      
+      {% endfor %} 
+    </tbody>
+  </table>
+  </ul>
+{% if Progres_Axe %}
+<hr>
+<h2>Progression globale des tarvaux de l'Axe {{object.name|capfirst}} :</h2>
+<td><CENTER><div class="progress">
+  <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width:{{ Progres_Axe }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ Progres_Axe }}%</div>
+</div></CENTER></td>
+<hr>
+{% endif %}
+    {% if progress_Axes %}              
+            <p><h2>Progression des tarvaux de l'Axe {{object.name|capfirst}} par entité : </h2>
+              
+
+              <ul>
+                  <table class="table">
+                    <thead>
+                      <tr>           
+                        <th scope="col"><CENTER>Entité</CENTER> </th>
+                        <th scope="col"><CENTER>Progression</CENTER> </th>
+                        
+
+                
+                      </tr>
+                    </thead>
+                    <tbody>
+                  {% for taux_Axe in progress_Axes %}
+                      <tr>            
+                        <td><CENTER>{{ taux_Axe.1}}</CENTER></td>
+                        <td><CENTER><div class="progress">
+                          <div class="progress-bar" role="progressbar" aria-label="Basic example" style="min-width: 2em; width:{{ taux_Axe.3 }}%" aria-valuenow="{{ taux_Axe.3 }}%" aria-valuemin="0" aria-valuemax="100">{{ taux_Axe.3 }}%</div>
+                        </div></CENTER></td>
+                        
+                      <tr>
+                  
+                  {% endfor %}          
+            </tbody>
+            </table>
+            </ul>
+    {% else %}
+          <p><h2>Il n'y a pas d'entités inscrites dans l'Axe {{object.name|capfirst}} : </h2>
+    {% endif %}
+        
+{% endif %}
+
+<script type="text/javascript">
+
+    window.onload = init;
+
+    function init(){
+
+      const fillStyle = new ol.style.Fill({ color: [250, 188, 50, .2] })
+      const strokeStyle = new ol.style.Stroke({ color: [0, 130, 196, 0], width: .5 })
+      const circleStyle = new ol.style.Circle({
+        fill: new ol.style.Fill({color: [245, 49, 5, 0.5]}),
+        radius: 3,
+        stroke: new ol.style.Stroke({ color: [0, 0, 45, 1], width: 1 })
+      })
+
+      var sourceaoi = new ol.source.Vector()
+
+      var layeraoi = new ol.layer.Vector({
+        source: sourceaoi,
+        title: 'AOIS',
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var sourcepp = new ol.source.Vector()
+      
+      var layerpp = new ol.layer.Vector({
+        source: sourcepp,
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var layerosm = new ol.layer.Tile({source: new ol.source.OSM()})
+      const openStreetMapStandard = new ol.layer.Tile({
+        source: new ol.source.OSM(),
+        visible: false,
+        title: 'OSMStandard'
+      })
+
+      const map = new ol.Map({
+        view: new ol.View({
+            center: [ 10, 9 ],
+            zoom: 6,
+            projection: 'EPSG:4326'
+        }),
+        layers:[
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        target: 'map'
+      })
+
+
+      sourceaoi.addFeatures(
+        new ol.format.GeoJSON().readFeatures({{aoi | safe}}, {
+          dataProjection: 'EPSG:4326',
+        })
+      );
+
+
+      map.addLayer(layeraoi);
+
+      var extentAoi = sourceaoi.getExtent();
+      {% comment %} var extentpp = sourcepp.getExtent(); {% endcomment %}
+      {% comment %} console.log(extentAoi); {% endcomment %}
+      var extentbuffer = new ol.extent.buffer(extentAoi,2);
+      {% comment %} console.log(extentbuffer); {% endcomment %}
+
+      map.getView().fit(extentbuffer, map.getSize());
+
+
+      // Vector Fe1ature Popup Logic 
+      const overlayContainerElement = document.querySelector('.overlay-container');
+      const overlayLayer = new ol.Overlay({
+        element: overlayContainerElement
+      })
+      map. addOverlay(overlayLayer);
+      const overlayFeatureName = document.getElementById('feature-name');
+      //const overlayFeatureAdditionInfo = document.getElementById('feature-additional-info');
+
+      map.on('click', function(e){
+        overlayLayer.setPosition(undefined);
+        map.forEachFeatureAtPixel(e.pixel, function (feature, layer){
+          let clickedCoordinate = e.coordinate;
+          let clickedFeatureName = feature.get('name');
+          //let clickedFeatureAdditionalInfo = feature.get('additional  info');
+          overlayLayer.setPosition(clickedCoordinate); 
+          overlayFeatureName.innerHTML = clickedFeatureName; 
+          //overlayFeatureAdditionInfo.innerHTML = clickedFeatureAdditionalInfo;
+        },
+        {
+          layerFilter: function(layerCandidate){
+            return layerCandidate.get('title') === 'AOIS'
+          }
+        })
+      })
+
+          window.onload = init;
+
+    function init(){
+
+      const fillStyle = new ol.style.Fill({ color: [250, 188, 50, .2] })
+      const strokeStyle = new ol.style.Stroke({ color: [0, 130, 196, 0], width: .5 })
+      const circleStyle = new ol.style.Circle({
+        fill: new ol.style.Fill({color: [245, 49, 5, 0.5]}),
+        radius: 3,
+        stroke: new ol.style.Stroke({ color: [0, 0, 45, 1], width: 1 })
+      })
+
+      var sourceaoi = new ol.source.Vector()
+
+      var layeraoi = new ol.layer.Vector({
+        source: sourceaoi,
+        title: 'AOIS',
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var sourcepp = new ol.source.Vector()
+      
+      var layerpp = new ol.layer.Vector({
+        source: sourcepp,
+        style: new ol.style.Style({
+          fill: fillStyle,
+          stroke: strokeStyle,
+          image: circleStyle
+        }) 
+      })
+
+      var layerosm = new ol.layer.Tile({source: new ol.source.OSM()})
+      const openStreetMapStandard = new ol.layer.Tile({
+        source: new ol.source.OSM(),
+        visible: false,
+        title: 'OSMStandard'
+      })
+
+      const map = new ol.Map({
+        view: new ol.View({
+            center: [ 10, 9 ],
+            zoom: 6,
+            projection: 'EPSG:4326'
+        }),
+        layers:[
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        target: 'map'
+      })
+
+
+      sourceaoi.addFeatures(
+        new ol.format.GeoJSON().readFeatures({{aoi | safe}}, {
+          dataProjection: 'EPSG:4326',
+        })
+      );
+
+
+      map.addLayer(layeraoi);
+
+      var extentAoi = sourceaoi.getExtent();
+      {% comment %} var extentpp = sourcepp.getExtent(); {% endcomment %}
+      {% comment %} console.log(extentAoi); {% endcomment %}
+      var extentbuffer = new ol.extent.buffer(extentAoi,2);
+      {% comment %} console.log(extentbuffer); {% endcomment %}
+
+      map.getView().fit(extentbuffer, map.getSize());
+
+
+      // Vector Fe1ature Popup Logic 
+      const overlayContainerElement = document.querySelector('.overlay-container');
+      const overlayLayer = new ol.Overlay({
+        element: overlayContainerElement
+      })
+      map. addOverlay(overlayLayer);
+      const overlayFeatureName = document.getElementById('feature-name');
+      //const overlayFeatureAdditionInfo = document.getElementById('feature-additional-info');
+
+      map.on('click', function(e){
+        overlayLayer.setPosition(undefined);
+        map.forEachFeatureAtPixel(e.pixel, function (feature, layer){
+          let clickedCoordinate = e.coordinate;
+          let clickedFeatureName = feature.get('name');
+          //let clickedFeatureAdditionalInfo = feature.get('additional  info');
+          overlayLayer.setPosition(clickedCoordinate); 
+          overlayFeatureName.innerHTML = clickedFeatureName; 
+          //overlayFeatureAdditionInfo.innerHTML = clickedFeatureAdditionalInfo;
+        },
+        {
+          layerFilter: function(layerCandidate){
+            return layerCandidate.get('title') === 'AOIS'
+          }
+        })
+      })
+
+    }
+    
+    }
+    </script>
+    
+    <div class="overlay-container">
+      <span class='overlay-text' id='feature-name'></span><br>
+      {% comment %} <span class='overlay-text' id='feature-additional-info'></span><br> {% endcomment %}
+    </div>
+
+  
+{% endblock %}
+{%block scripts%}
+<script type="text/javascript">
+      var ctx = document.getElementById('Budgetchart').getContext('2d');
+      var Budgetchart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+              label: 'Dataset 1',
+              data: {{ data|safe }},
+              backgroundColor: [
+                'rgb(255, 205, 86)', 
+                'rgb(54, 162, 235)', 
+                'rgb(0, 255, 0)', 
+                'rgb(255, 99, 132)'
+              ],
+
+            }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'left',
+                },
+                title: {
+                  display: true,
+                  text: 'Exécution du budget'
+                }
+              }
+            },
+      })
+</script>
+{%endblock scripts%}

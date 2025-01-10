@@ -1,0 +1,56 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Axe detail
+{% endblock %}
+
+{% block content %}
+
+
+    <div id="container" style="width: 90%;">
+        <canvas id="piechart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById('piechart').getContext('2d');
+      var piechart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+            datasets: [{
+              label: 'Dataset 1',
+              data: [200, 300, 220, 250, 180],
+              backgroundColor: [
+                'rgb(255, 205, 86)', 
+                'rgb(54, 162, 235)', 
+                'rgb(0, 255, 0)', 
+                'rgb(255, 99, 132)'
+              ],
+
+            }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'left',
+                },
+                title: {
+                  display: true,
+                  text: 'Exécution du budget'
+                }
+              }
+            },
+      })
+      
+        
+
+
+    </script>
+
+
+
+    {% endblock content %}
+
+
+   

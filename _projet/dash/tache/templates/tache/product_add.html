@@ -1,0 +1,19 @@
+{% extends 'tache/base.html' %}
+
+{% block title %}
+Product add
+{% endblock %}
+
+{% block content %}
+<h1>Add Product...</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Add</button>
+</form>
+<script>
+    var result_id = {{ result.id }};
+    document.getElementById("input_result").value = result_id;
+</script>
+
+{% endblock %}

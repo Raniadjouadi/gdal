@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+{%extends 'tache/base.html'%}
+{% block title %} Welcome page {{ request.user.username }} {% endblock %} 
+{%load static %}
+
+{% block content %}
+
+<!-- Page Heading -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+  <div class="d-block mb-4 mb-md-0">
+      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+          <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+              <li class="breadcrumb-item">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+              </li>
+              <li class="breadcrumb-item"><a href="#">Welcome page</a></li>
+          </ol>
+      </nav>
+  </div>
+  <div class="btn-toolbar mb-2 mb-md-0">
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+          class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  </div>
+</div>
+<div>
+</div>
+<!--End of Page Heading -->
+
+<body id="page-top">
+            <div id="content">
+                    <div class="row">
+                        <!-- AXE Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                AXE</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">4 axes </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-arrow-right fa-2x text-gray-300 " aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  Entities Card  -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Entities</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">53 entity</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-folder fa-2x text-gray-300" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                          <!--   Consultant Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                               Consultant</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">102 consultant</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-users fa-2x text-gray-300" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    <br>
+                    
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Pie Chart -->
+                        <div class="col-xl-7 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Exécution du budget de l'ensenble des axes </h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Budget réservé
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Budget engagé
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Budget consomé
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
+                                <table class="table table-hover m-b-0">
+                                    <thead>
+                                        <tr>
+                                        <th class="text-center">Budget total</th>
+                                        <th class="text-center">Budget reserve</th>
+                                        <th class="text-center">Budget engagé</th>
+                                        <th class="text-center">Budget consommé</th>
+                                        <th class="text-center">Budget restant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">686846587</td>
+                                            <td class="text-center">2013/08/12</td>
+                                            <td class="text-center">4656855</td>
+                                            <td class="text-center">5745536</td>
+                                            <td class="text-center">52565665</td>
+                                        </tr>   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                      
+                        <div class="col-xl-5 col-lg-5">
+                            <div class="card shadow mb-3">
+                                <!--  avancement par axe Card Header -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary"> avancement par axe </h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Settings:</div>
+                                            <a class="dropdown-item" href="#">add project</a>
+                                            <a class="dropdown-item" href="#">update project</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">remove project</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body"> 
+                                    <div class="mt-4 text-center small">
+                                      <!-- Listes des axes -->
+                    
+                                      <div class="card-body px-0 pt-0 pb-2">
+                                        <div class="table-responsive p-0">
+                                            <div class="table-responsive">
+                                                <div class="customer-scroll" style="height:420px;position:relative;">
+                <div class="table-responsive">
+                    <div class="customer-scroll" style="height:420px;position:relative;">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Axe</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">&nbsp;</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Progress </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td  class="align-middle text-center text-sm">
+                                      <h6 class=" mb-0 text-sm">Climat</h6>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                  <p class="text-secondary text-xs font-weight-bold">578527852</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">&nbsp;</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">68%</span>
+                                    <div class="progress mt-1" style="height:4px;">
+                                      <div class="progress-bar bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td  class="align-middle text-center text-sm">
+                                      <h6 class=" mb-0 text-sm">Eau</h6>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                  <p class="text-secondary text-xs font-weight-bold">578527852</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">&nbsp;</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">68%
+                                      <div class="progress mt-1" style="height:4px;">
+                                        <div class="progress-bar bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td  class="align-middle text-center text-sm">
+                                      <h6 class=" mb-0 text-sm">Biodiversité</h6>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                  <p class="text-secondary text-xs font-weight-bold">578527852</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">&nbsp;</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">68%
+                                      <div class="progress mt-1" style="height:4px;">
+                                        <div class="progress-bar bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td  class="align-middle text-center text-sm">
+                                      <h6 class=" mb-0 text-sm">Terre</h6>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                  <p class="text-secondary text-xs font-weight-bold">578527852</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">&nbsp;</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">68%
+                                      <div class="progress mt-1" style="height:4px;">
+                                        <div class="progress-bar bg-danger rounded" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    </span>
+                                </td>
+                          </tr>
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+       </div>
+     </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Content Row -->
+<div class="row">
+  
+    <div class="col-xl-5 col-lg-5">
+        <div class="card shadow mb-3">
+            <!--  avancement par axe Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"> Activity feed </h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Settings:</div>
+                        <a class="dropdown-item" href="#">add project</a>
+                        <a class="dropdown-item" href="#">update project</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">remove project</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <ul class="feed-blog pl-0">
+                    <li class="active-feed">
+                        <h6><span class="badge badge-danger">AXE</span> Eddie uploaded new AXE: <small class="text-muted">2 hours ago</small></h6>  
+                    </li>
+                    <li class="diactive-feed">
+                        <div class="feed-user-img">
+                        </div>
+                        <h6><span class="badge badge-success">Project</span> Sarah marked the New Project: <span class="text-c-green"> Trash Can Icon Design</span><small class="text-muted"> 2 hours ago</small></h6>
+                    </li>
+                    <li class="diactive-feed mb-0">
+                        <div class="feed-user-img">  
+                        </div>
+                        <h6><span class="badge badge-primary">Task</span> abc posted a task: <span class="text-c-green">Design a new Homepage</span> <small class="text-muted">6 hours ago</small></h6>
+                    </li>
+                    <li class="active-feed">
+                        <h6><span class="badge badge-danger">AXE</span> Eddie uploaded new AXE: <small class="text-muted">2 hours ago</small></h6>  
+                    </li>
+                    <li class="diactive-feed">
+                        <div class="feed-user-img">
+                        </div>
+                        <h6><span class="badge badge-success">Project</span> Sarah marked the New Project: <span class="text-c-green"> Trash Can Icon Design</span><small class="text-muted"> 2 hours ago</small></h6>
+                    </li>
+                    <li class="diactive-feed mb-0">
+                        <div class="feed-user-img">  
+                        </div>
+                        <h6><span class="badge badge-primary">Task</span> abc posted a task: <span class="text-c-green">Design a new Homepage</span> <small class="text-muted">6 hours ago</small></h6>
+                    </li>
+                </ul>
+            </div>
+</div>
+</div>
+<div class="col-xl-7 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Project map </h6>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                    aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25581.622540650438!2d3.1369731645075554!3d36.72969794703244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e4dbe65b93f89%3A0xe3c2f5074cbd0391!2sMaya%20Immobilier!5e0!3m2!1sfr!2sdz!4v1675786767218!5m2!1sfr!2sdz" width="650" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                             
+        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+ 
+                    
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+</body>
+{% endblock %}
+
